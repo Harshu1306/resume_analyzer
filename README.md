@@ -39,8 +39,8 @@ The platform is engineered using a robust, modular full-stack Python architectur
 
 The calculation matrix drops arbitrary percentages in favor of a clean, transparent **Scale of 10.0**:
 
-1. **Layer 1: Hard Token Intersection (5.0 Points)** Maps the lowercased text boundary tokens (`\b{keyword}\b`) against a predefined Technical Skill Graph. Resolves the strict ratio of matched terms against total employer requirements.
-2. **Layer 2: Soft Semantic Context Analysis (5.0 Points)** Generates a 384-dimensional dense vector space embedding of the overall text structures. Applies Min-Max normalization to shift organic contextual alignments accurately into a visible distribution curve.
+1. **Layer 1: Hard Token Intersection** Maps the lowercased text boundary tokens (`\b{keyword}\b`) against a predefined Technical Skill Graph. Resolves the strict ratio of matched terms against total employer requirements.
+2. **Layer 2: Soft Semantic Context Analysis** Generates a 384-dimensional dense vector space embedding of the overall text structures. Applies Min-Max normalization to shift organic contextual alignments accurately into a visible distribution curve.
 3. **Layer 3: Dynamic Suggestions Audit** Runs an automated rule engine evaluating text depth (character count metrics) and missing skill vectors to emit metrics-driven optimization hints.
 
 ---
