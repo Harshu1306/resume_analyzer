@@ -1,0 +1,11 @@
+gradio
+pdfplumber
+spacy
+scikit-learn
+sentence-transformers
+transformers
+torch
+pydantic
+python-multipart
+# Add this line right at the bottom of your requirements.txt
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.0/en_core_web_sm-3.7.0-py3-none-any.whl

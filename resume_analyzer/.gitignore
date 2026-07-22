@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+
+# Model / HuggingFace cache
+.cache/
+*.bin
+*.safetensors
+
+# OS / editor
+
+.idea/
+.vscode/
+*.swp
+
+# Gradio temp uploads
+gradio_tmp/
