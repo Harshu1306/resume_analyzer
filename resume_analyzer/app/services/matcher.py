@@ -57,15 +57,6 @@ def _keyword_score(
     resume_text: str,
     jd_text: str,
 ) -> tuple[float, frozenset]:
-    """
-    Compute the normalised keyword overlap score in [0, 1] and the set of
-    skills missing from the resume.
-
-    Returns (score, missing_skills).
-
-    When the JD contains no skills from the known vocabulary, falls back to
-    TF-IDF cosine similarity so the metric is never vacuously 0 or 1.
-    """
     resume_skills = frozenset(match_skills(resume_text))
     jd_skills = _jd_skills(jd_text)
 
@@ -108,10 +99,6 @@ def _build_suggestions(
     keyword_score: float,
     resume_text: str,
 ) -> str:
-    """
-    Build a human-readable suggestions string from the scoring signals.
-    Returns at least one suggestion (a positive message when everything is good).
-    """
     suggestions: list[str] = []
 
     if missing_skills:
@@ -147,20 +134,7 @@ def _build_suggestions(
 
 
 def calculate_ats_metrics(resume_text: str, job_description: str) -> dict:
-    """
-    Compute a composite ATS score (out of 10) for a resume against a job description.
-
-    Score breakdown
-    ---------------
-    - keyword_match  (KEYWORD_WEIGHT = 50 %): normalised overlap of domain skills
-    - semantic_match (SEMANTIC_WEIGHT = 50 %): mean-pooled sentence-transformer similarity
-
-    Returns a dict with keys:
-      ats_score      float  — final weighted score /10, clamped to [SCORE_MIN, SCORE_MAX]
-      keyword_match  float  — keyword sub-score /10
-      semantic_match float  — semantic sub-score /10
-      suggestions    str    — actionable improvement notes
-    """
+    
     if not resume_text.strip() or not job_description.strip():
         return {
             "ats_score": 0.0,

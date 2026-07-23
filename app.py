@@ -2,36 +2,20 @@ import gradio as gr
 from app.services.parser import extract_text_from_pdf, extract_skills_and_info
 from app.services.matcher import calculate_ats_metrics
 from app.services.llm_helper import generate_interview_questions
-from app.database import get_db_connection
-
-
 def process_ats_diagnostics(file_obj, job_description):
     if not file_obj or not job_description:
         return "### ⚠️ System Warning\nPlease drop both a valid PDF resume and Target Job Details.", "", ""
 
-    # Process pipeline
     resume_text = extract_text_from_pdf(file_obj.name)
     profile = extract_skills_and_info(resume_text)
     metrics = calculate_ats_metrics(resume_text, job_description)
 
-    # Extract score out of 10 straight from the updated backend dictionary metric
     ats_score_out_of_10 = metrics["ats_score"]
-
-    # Save metrics to local persistence engine
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO scans (email, ats_score) VALUES (?, ?)",
-                       (profile["email"], ats_score_out_of_10))
-        conn.commit()
-        conn.close()
-    except Exception as e:
-        print(f"Database logging skip: {e}")
 
     skills_output = ", ".join(
         profile["skills"]) if profile["skills"] else "None explicitly found."
 
-    # HTML template completely updated to clean metric values out of 10
+
     results_markdown = f"""
     <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); padding: 20px; border-radius: 8px;">
         <h2 style='margin: 0 0 15px 0; color: #818cf8;'>🎯 Overall ATS Score: {ats_score_out_of_10}/10</h2>
@@ -44,10 +28,10 @@ def process_ats_diagnostics(file_obj, job_description):
     return results_markdown, skills_output, metrics["suggestions"]
 
 
-# --- Premium Custom Theme Architecture ---
+
 custom_theme = gr.themes.Base(
-    primary_hue="indigo",      # Sleek, premium indigo accent instead of standard blue
-    neutral_hue="slate",       # Deep slate grey background palette
+    primary_hue="indigo",      
+    neutral_hue="slate",      
     font=[gr.themes.GoogleFont("Plus Jakarta Sans"),
           "ui-sans-serif", "sans-serif"]
 )

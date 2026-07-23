@@ -1,11 +1,3 @@
-"""
-llm_helper.py — Interview question generation via Flan-T5.
-
-Public API
-----------
-generate_interview_questions(role, skills) -> str
-"""
-
 from transformers import T5ForConditionalGeneration, AutoTokenizer
 
 _MODEL_NAME = "google/flan-t5-base"
@@ -14,13 +6,6 @@ _model = T5ForConditionalGeneration.from_pretrained(_MODEL_NAME)
 
 
 def generate_interview_questions(role: str, skills: str) -> str:
-    """
-    Generate up to 3 technical interview questions for the given *role*
-    and *skills* string using Flan-T5.
-
-    Returns a numbered string of questions, or a graceful fallback message
-    if the inputs are empty or the model produces no usable output.
-    """
     if not role.strip() or not skills.strip():
         return "Please provide both a target role and a list of skills."
 
